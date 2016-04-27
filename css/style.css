@@ -11,8 +11,9 @@
 }
 
 #buttons{
-  margin: 30px;
-  margin-left: 29.8%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 #selection-chart{

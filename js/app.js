@@ -60,6 +60,7 @@ function handleClick(event) {
   for (var i = 0; i < allImages.length; i ++){
     if (event.target.id === allImages[i].productName){
       allImages[i].clicks += 1;
+      localStorage.setItem('clicks', JSON.stringify(allImages));
     }
   }
   totalClicks -= 1;
@@ -77,11 +78,14 @@ function handleClick(event) {
 function showButtons(){
   document.getElementById('button-one').style.visibility = 'visible';
   document.getElementById('button-two').style.visibility = 'visible';
+  document.getElementById('clear-local').style.visibility = 'visible';
+
 }
 
 function hideButtons(){
   document.getElementById('button-one').style.visibility = 'hidden';
   document.getElementById('button-two').style.visibility = 'hidden';
+  document.getElementById('clear-local').style.visibility = 'hidden';
 }
 
 //Allows user to make 10 more selections
@@ -166,5 +170,13 @@ middleBox.addEventListener('click', handleClick);
 rightBox.addEventListener('click', handleClick);
 buttonOne.addEventListener('click', handleTenMore);
 buttonTwo.addEventListener('click', handleDisplayGraph);
+document.getElementById('clear-local').addEventListener('click', function(){
+  localStorage.clear();
+});
 
 getImages();
+
+(function checkLocal(){
+  var parsedData = JSON.parse(localStorage.clicks);
+  allImages = parsedData;
+})();
