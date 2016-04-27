@@ -11,7 +11,8 @@
 }
 
 #buttons{
-margin-left: 32.75%;
+  margin: 30px;
+  margin-left: 29.8%;
 }
 
 #selection-chart{
@@ -43,12 +44,21 @@ a{
   color: #4a2408;
   visibility: hidden;
   font-size: 14pt;
+  background-color: #fef9f2;
+  padding: 10px;
+  border-style: solid;
+  border-width: thin;
+  border-color: #4a2408;
+  font-family: 'Open Sans';
+  font-weight: 600;
 }
 
 a:hover{
   color: #d46b1d;
+  background-color: #f8eee6;
 }
 
 a:active{
   color: #d4511d;
+  background-color: #e5d4c6;
 }

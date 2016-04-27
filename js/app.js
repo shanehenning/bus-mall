@@ -9,6 +9,7 @@ var middleBox = document.getElementById('middle-box');
 var rightBox = document.getElementById('right-box');
 var buttonOne = document.getElementById('button-one');
 var buttonTwo = document.getElementById('button-two');
+var results = document.getElementById('results');
 
 //Constructor function to create object for each img
 function Product(productName, filepath){
@@ -16,31 +17,32 @@ function Product(productName, filepath){
   this.filepath = filepath;
   this.clicks = 0;
   this.displays = 0;
+  allImages.push(this);
 }
 
 //Generates a random number < the length of the allImages array
-function getIndex() {
+function getRandomIndex() {
   return Math.floor(Math.random() * allImages.length);
 }
 
 //Randomly display 3 images from allImages array
 function getImages() {
-  var xImg = allImages[getIndex()];
+  var xImg = allImages[getRandomIndex()];
   leftBox.innerHTML = '<img src="' + xImg.filepath + '" id="' + xImg.productName + '">';
   xImg.displays += 1;
 
-// #2 img same as above with a while statement, re-randomizes if 2nd image = 1st
-  var yImg = allImages[getIndex()];
+//#2 img same as above with a while statement, re-randomizes if 2nd image = 1st
+  var yImg = allImages[getRandomIndex()];
   while (yImg === xImg){
-    yImg = allImages[getIndex()];
+    yImg = allImages[getRandomIndex()];
   }
   middleBox.innerHTML = '<img src="' + yImg.filepath + '" id="' + yImg.productName + '">';
   yImg.displays += 1;
 
-//#3 img same as above with a while statement, re-randomizes if 3rd image = 1st or 2nd
-  var zImg = allImages[getIndex()];
+//#3 img same as above, re-randomizes if 3rd image = 1st or 2nd
+  var zImg = allImages[getRandomIndex()];
   while (zImg === xImg || zImg === yImg){
-    zImg = allImages[getIndex()];
+    zImg = allImages[getRandomIndex()];
   }
   rightBox.innerHTML = '<img src="' + zImg.filepath + '" id="' + zImg.productName + '">';
   zImg.displays += 1;
@@ -53,8 +55,8 @@ function clearImages(){
   rightBox.innerHTML = '';
 }
 
-//On-click event to reset images
-function addClick(event) {
+//On-click event to collect new images
+function handleClick(event) {
   for (var i = 0; i < allImages.length; i ++){
     if (event.target.id === allImages[i].productName){
       allImages[i].clicks += 1;
@@ -63,9 +65,9 @@ function addClick(event) {
   totalClicks -= 1;
   if(totalClicks === 0){
     showButtons();
-    leftBox.removeEventListener('click', addClick);
-    middleBox.removeEventListener('click', addClick);
-    rightBox.removeEventListener('click', addClick);
+    leftBox.removeEventListener('click', handleClick);
+    middleBox.removeEventListener('click', handleClick);
+    rightBox.removeEventListener('click', handleClick);
   } else{
     clearImages();
     getImages();
@@ -83,13 +85,13 @@ function hideButtons(){
 }
 
 //Allows user to make 10 more selections
-function tenMore(){
+function handleTenMore(){
   hideButtons();
   totalClicks = 11;
   getImages();
-  leftBox.addEventListener('click', addClick);
-  middleBox.addEventListener('click', addClick);
-  rightBox.addEventListener('click', addClick);
+  leftBox.addEventListener('click', handleClick);
+  middleBox.addEventListener('click', handleClick);
+  rightBox.addEventListener('click', handleClick);
 }
 
 //chart--------------------------------------------------------------
@@ -101,12 +103,11 @@ function populateDataArrays(){
   }
 }
 
-function showGraph (){
+function handleDisplayGraph (){
   productNames = [];
   timesClicked = [];
   timesDisplayed = [];
   populateDataArrays();
-  var contextTest = document.getElementById('results');
   results.innerHTML = '<canvas id="selection-chart" width="932" height="300"></canvas>';
   var context = document.getElementById('selection-chart').getContext('2d');
   var selectionChart = new Chart(context, {
@@ -138,32 +139,32 @@ function showGraph (){
 }
 
 //Adds each product
-allImages.push(new Product('R2-D2', 'img/bag.jpg'));
-allImages.push(new Product('Banana', 'img/banana.jpg'));
-allImages.push(new Product('Bathroom', 'img/bathroom.jpg'));
-allImages.push(new Product('Boots', 'img/boots.jpg'));
-allImages.push(new Product('Breakfast', 'img/breakfast.jpg'));
-allImages.push(new Product('Bubblegum', 'img/bubblegum.jpg'));
-allImages.push(new Product('Chair', 'img/chair.jpg'));
-allImages.push(new Product('Cthulhu', 'img/cthulhu.jpg'));
-allImages.push(new Product('Dog Duck', 'img/dog-duck.jpg'));
-allImages.push(new Product('Dragon', 'img/dragon.jpg'));
-allImages.push(new Product('Pen', 'img/pen.jpg'));
-allImages.push(new Product('Pet Sweep', 'img/pet-sweep.jpg'));
-allImages.push(new Product('Scissors', 'img/scissors.jpg'));
-allImages.push(new Product('Shark', 'img/shark.jpg'));
-allImages.push(new Product('Sweep', 'img/sweep.jpg'));
-allImages.push(new Product('Tauntaun', 'img/tauntaun.jpg'));
-allImages.push(new Product('Unicorn', 'img/unicorn.jpg'));
-allImages.push(new Product('Usb', 'img/usb.jpg'));
-allImages.push(new Product('Water Can', 'img/water-can.jpg'));
-allImages.push(new Product('Wine Glass', 'img/wine-glass.jpg'));
+new Product('R2-D2', 'img/bag.jpg');
+new Product('Banana', 'img/banana.jpg');
+new Product('Bathroom', 'img/bathroom.jpg');
+new Product('Boots', 'img/boots.jpg');
+new Product('Breakfast', 'img/breakfast.jpg');
+new Product('Bubblegum', 'img/bubblegum.jpg');
+new Product('Chair', 'img/chair.jpg');
+new Product('Cthulhu', 'img/cthulhu.jpg');
+new Product('Dog Duck', 'img/dog-duck.jpg');
+new Product('Dragon', 'img/dragon.jpg');
+new Product('Pen', 'img/pen.jpg');
+new Product('Pet Sweep', 'img/pet-sweep.jpg');
+new Product('Scissors', 'img/scissors.jpg');
+new Product('Shark', 'img/shark.jpg');
+new Product('Sweep', 'img/sweep.jpg');
+new Product('Tauntaun', 'img/tauntaun.jpg');
+new Product('Unicorn', 'img/unicorn.jpg');
+new Product('Usb', 'img/usb.jpg');
+new Product('Water Can', 'img/water-can.jpg');
+new Product('Wine Glass', 'img/wine-glass.jpg');
 
 //add event listener to the three images
-leftBox.addEventListener('click', addClick);
-middleBox.addEventListener('click', addClick);
-rightBox.addEventListener('click', addClick);
-buttonOne.addEventListener('click', tenMore);
-buttonTwo.addEventListener('click', showGraph);
+leftBox.addEventListener('click', handleClick);
+middleBox.addEventListener('click', handleClick);
+rightBox.addEventListener('click', handleClick);
+buttonOne.addEventListener('click', handleTenMore);
+buttonTwo.addEventListener('click', handleDisplayGraph);
 
 getImages();
